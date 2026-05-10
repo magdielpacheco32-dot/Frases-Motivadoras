@@ -11,36 +11,40 @@ const refreshBtn = document.getElementById('refresh-btn');
  * Se utiliza 'async' para manejar la promesa de forma lineal y legible.
  */
 async function fetchInspiration() {
-    try {
-        // Feedback visual: Estado de carga inicial
-        quoteContainer.innerHTML = '<div class="loader">Buscando inspiración en el océano de datos...</div>';
+    // Intentos máximos para evitar el error 408
+    const MAX_RETRIES = 2;
+    let attempt = 0;
 
-        // 'await' detiene la ejecución hasta que la petición fetch se resuelva
-        const response = await fetch(API_URL);
-        
-        // Manejo robusto: Si la respuesta no es 200 OK, lanzamos error al bloque catch
-        if (!response.ok) {
-            throw new Error(`Fallo en servidor: ${response.status}`);
+    while (attempt <= MAX_RETRIES) {
+        try {
+            quoteContainer.innerHTML = '<div class="loader">Buscando inspiración en el océano de datos...</div>';
+
+            const response = await fetch(API_URL);
+            
+            if (!response.ok) {
+                throw new Error(`Fallo en servidor: ${response.status}`);
+            }
+
+            const dataJSON = await response.json();
+            if (!dataJSON.contents) throw new Error("Datos corruptos");
+            
+            const data = JSON.parse(dataJSON.contents);
+            displayQuote(data[0]);
+            return; // Si tiene éxito, sale de la función
+
+        } catch (error) {
+            attempt++;
+            console.error(`Intento ${attempt} fallido:`, error);
+            
+            if (attempt > MAX_RETRIES) {
+                quoteContainer.innerHTML = `
+                    <div style="padding: 20px; border-radius: 10px; background: #fff5f5;">
+                        <p style="color:#c53030; font-weight:bold;">⚠️ La conexión tardó demasiado (Error 408/Timeout)</p>
+                        <p style="font-size: 0.8rem;">Revisa tu señal de internet y presiona el botón de abajo para intentar de nuevo.</p>
+                    </div>
+                `;
+            }
         }
-
-        const dataJSON = await response.json();
-   
-        // Deserialización: Convertimos la cadena JSON del proxy en un objeto usable
-        if (!dataJSON.contents) throw new Error("Datos corruptos");
-        const data = JSON.parse(dataJSON.contents);
-
-        // Llamada a la función de renderizado con el primer elemento del array
-        displayQuote(data[0]);
-
-    } catch (error) {
-        // Bloque Catch: Captura errores de red, de parseo o de servidor
-        console.error("Error detectado:", error); 
-        quoteContainer.innerHTML = `
-            <div style="padding: 20px; border-radius: 10px; background: #fff5f5;">
-                <p style="color:#c53030; font-weight:bold;">⚠️ Error de conexión</p>
-                <small style="color:#666;">${error.message}. Intenta de nuevo.</small>
-            </div>
-        `;
     }
 }
 

@@ -5,32 +5,41 @@ const refreshBtn = document.getElementById('refresh-btn');
 
 async function fetchInspiration() {
     try {
+
         quoteContainer.innerHTML = '<div class="loader">Buscando inspiración...</div>';
 
         const response = await fetch(API_URL);
         
-        if (!response.ok) throw new Error("Error en la conexión");
+        if (!response.ok) {
+            throw new Error(`Error de red: ${response.status} ${response.statusText}`);
+        }
 
         const dataJSON = await response.json();
    
+        if (!dataJSON.contents) {
+            throw new Error("No se recibieron datos válidos de la API.");
+        }
+
         const data = JSON.parse(dataJSON.contents);
-        
+
         displayQuote(data[0]);
 
     } catch (error) {
+
         console.error("Hubo un problema con la petición:", error); 
-        quoteContainer.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+        quoteContainer.innerHTML = `
+            <div class="error-box">
+                <p style="color:red;">⚠️ Lo sentimos, algo salió mal.</p>
+                <small>${error.message}</small>
+            </div>
+        `;
     }
 }
 
-/**
- * Función para renderizar la información en el DOM
- * @param {Object} quoteData - Objeto con los datos de la frase (q, a, c)
- */
-
 function displayQuote(quoteData) {
-
     quoteContainer.innerHTML = '';
+
+    if (!quoteData) return;
 
     const card = document.createElement('div');
     card.className = 'quote-card';
@@ -45,5 +54,4 @@ function displayQuote(quoteData) {
 }
 
 refreshBtn.addEventListener('click', fetchInspiration);
-
 window.onload = fetchInspiration;

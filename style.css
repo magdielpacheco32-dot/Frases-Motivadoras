@@ -1,80 +1,120 @@
+/* Variables con la paleta de la imagen proporcionada */
 :root {
-    --primary-color: #2c3e50;
-    --accent-color: #3498db;
-    --text-color: #333;
-    --bg-color: #f4f7f6;
+    --dark-navy: #0A1931;    /* El color más oscuro */
+    --deep-blue: #1A3D63;    /* Azul para bordes/botones */
+    --ocean-blue: #4A7FA7;   /* Azul acento */
+    --soft-blue: #B3CFE5;    /* Fondos suaves */
+    --ice-white: #F6FAFD;    /* Fondo principal */
+    --text-main: #1A3D63;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--dark-navy) 0%, var(--deep-blue) 100%);
+    color: var(--text-main);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    margin: 0;
+    padding: 20px;
 }
 
 .main-container {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    max-width: 500px;
-    width: 90%;
+    background-color: var(--ice-white);
+    padding: 3rem 2rem;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    max-width: 600px;
+    width: 100%;
     text-align: center;
+    border-top: 8px solid var(--ocean-blue);
 }
 
 header h1 {
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+    color: var(--dark-navy);
+    margin-bottom: 8px;
 }
 
+.subtitle {
+    color: var(--ocean-blue);
+    font-weight: 300;
+    margin-bottom: 2rem;
+}
+
+/* Diseño de la Tarjeta de Frase (Novedoso) */
 .quote-card {
     margin: 2rem 0;
-    padding: 1.5rem;
-    border-left: 5px solid var(--accent-color);
-    background: #f9f9f9;
-    transition: transform 0.3s ease;
-}
-
-.quote-card:hover {
-    transform: translateY(-5px);
+    padding: 2rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: inset 0 0 10px rgba(179, 207, 229, 0.2);
+    border: 1px solid var(--soft-blue);
+    position: relative;
 }
 
 .quote-text {
-    font-size: 1.25rem;
+    font-size: 1.4rem;
+    line-height: 1.6;
     font-style: italic;
-    margin-bottom: 1rem;
+    color: var(--dark-navy);
+    margin-bottom: 1.5rem;
     display: block;
 }
 
 .quote-author {
-    font-weight: bold;
-    color: var(--accent-color);
-    text-align: right;
+    font-weight: 700;
+    color: var(--ocean-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
     display: block;
 }
 
 .quote-chars {
-    font-size: 0.8rem;
-    color: #888;
-    margin-top: 10px;
+    font-size: 0.75rem;
+    color: var(--ocean-blue);
+    opacity: 0.7;
+    margin-top: 15px;
     display: block;
 }
 
+/* Botón Profesional */
 button {
-    background-color: var(--accent-color);
+    background-color: var(--deep-blue);
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
     cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(26, 61, 99, 0.3);
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: var(--ocean-blue);
+    transform: translateY(-2px);
+}
+
+/* Créditos */
+footer {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--soft-blue);
+    padding-top: 1.5rem;
+}
+
+.credits p { font-size: 0.9rem; }
+.api-ref a { color: var(--ocean-blue); text-decoration: none; font-weight: bold; }
+
+/* RESPONSIVIDAD (Media Queries) */
+@media (max-width: 480px) {
+    .main-container { padding: 1.5rem; }
+    header h1 { font-size: 1.5rem; }
+    .quote-text { font-size: 1.2rem; }
 }

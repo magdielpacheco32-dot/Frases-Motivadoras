@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inspiración Diaria</title>
+    <title>Inspiración Diaria | Frases Motivadoras</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,18 +12,22 @@
     <div class="main-container">
         <header>
             <h1>Reflexión del Momento</h1>
-            <p>Conectando con la fuente de sabiduría</p>
+            <p class="subtitle">Conectando con la fuente de sabiduría</p>
         </header>
 
         <main id="quote-container">
-    
             <div id="loader" class="loader">Cargando sabiduría...</div>
         </main>
 
-        <button id="refresh-btn">Obtener Nueva Frase</button>
+        <div class="actions">
+            <button id="refresh-btn">Obtener Nueva Frase</button>
+        </div>
 
         <footer>
-            <p>Inspirational quotes provided by <a href="https://zenquotes.io/" target="_blank">ZenQuotes API</a></p>
+            <div class="credits">
+                <p>Desarrollado con ❤️ por <strong>Magdiel Pacheco</strong></p>
+                <p class="api-ref">Powered by <a href="https://zenquotes.io/" target="_blank">ZenQuotes API</a></p>
+            </div>
         </footer>
     </div>
 
